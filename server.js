@@ -17,7 +17,7 @@ const DEFAULT_SHEETS_URL =
 const SHEETS_LIVE_URL = String(process.env.SHEETS_LIVE_URL || DEFAULT_SHEETS_URL).trim();
 
 const ANCHOR_CLAVE = core.normalizeClave(process.env.ANCHOR_CLAVE || "23CL04682");
-const RESET_AFTER = String(process.env.RESET_AFTER || "2026-08-12T17:31:00.000Z").trim();
+const RESET_AFTER = String(process.env.RESET_AFTER || "2026-08-27T15:50:00.000Z").trim();
 const RESET_AFTER_MS = (() => {
   const t = Date.parse(RESET_AFTER);
   return Number.isFinite(t) ? t : Date.now();
@@ -172,7 +172,6 @@ function isAnchorResponse(r) {
 
 function shouldKeepResponse(r) {
   if (core.isTestRecord(r) || /PRUEBA-CODEX-20260819/i.test(JSON.stringify(r))) return false;
-  if (isAnchorResponse(r)) return true;
   const t = Date.parse(r.receivedAt || r.timestamp || 0);
   if (!Number.isFinite(t)) return false;
   return t >= RESET_AFTER_MS;
