@@ -1,5 +1,6 @@
 (() => {
   const POLL_MS = 4000;
+  const PERIOD_START = "2026-08-28T00:00:00-06:00";
   const kpisEl = document.getElementById("kpis");
   const metaStrip = document.getElementById("metaStrip");
   const cardsGrid = document.getElementById("cardsGrid");
@@ -291,8 +292,8 @@
     const { curNps, prevNps } = periodNps(list, state.trendMode || "day");
 
     const times = list.map((r) => Date.parse(r.receivedAt || r.timestamp || 0)).filter(Number.isFinite);
-    const periodFrom = times.length ? new Date(Math.min(...times)) : null;
-    const periodTo = times.length ? new Date(Math.max(...times)) : null;
+    const periodFrom = new Date(PERIOD_START);
+    const periodTo = times.length ? new Date(Math.max(...times, Date.now())) : new Date();
 
     return {
       total: list.length,
